@@ -27,12 +27,12 @@ const styles = StyleSheet.create({
         marginRight : 18,
         width: 25,
         height: 25,
-        marginTop : 10
+        marginTop : 4
     },
     profile : {
-        width : 50,
-        height : 50,
-        borderRadius : 50,
+        width : 40,
+        height : 40,
+        borderRadius : 100,
     }
 })
 

@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import TinderCard from "react-tinder-card";
-import richardImage from "../../assets/profileImage.jpeg";
 import women1 from "../../assets/women1.jpg";
 import women2 from "../../assets/women2.jpg";
 import women3 from "../../assets/women3.jpg";
@@ -115,7 +114,9 @@ const db = [
     age: 22,
     verified: true,
     location: "Jaipur, India",
-    swipedYou : null
+    swipedYou: null,
+    about: "I enjoy exploring new places and trying different cuisines.",
+    interest: ["Travel", "Food", "Photography", "Reading"],
   },
   {
     name: "Olivia Rodriguez",
@@ -123,7 +124,9 @@ const db = [
     age: 23,
     verified: true,
     location: "Delhi, India",
-    swipedYou : true
+    swipedYou: true,
+    about: "Passionate about technology and always up for a good conversation.",
+    interest: ["Technology", "Movies", "Fitness", "Gaming"],
   },
   {
     name: "Mia Thompson",
@@ -131,7 +134,9 @@ const db = [
     age: 21,
     verified: true,
     location: "Mumbai, India",
-    swipedYou : false
+    swipedYou: false,
+    about: "An adventurous spirit who loves outdoor activities and nature.",
+    interest: ["Hiking", "Nature", "Painting", "Cooking"],
   },
   {
     name: "Ava Davis",
@@ -139,7 +144,9 @@ const db = [
     age: 24,
     verified: true,
     location: "Gurugram, India",
-    swipedYou : true
+    swipedYou: true,
+    about: "A fitness enthusiast and a bookworm. Always up for a good workout or a captivating book.",
+    interest: ["Fitness", "Reading", "Travel", "Yoga"],
   },
   {
     name: "Sophia Smith",
@@ -147,7 +154,9 @@ const db = [
     age: 19,
     verified: true,
     location: "London, UK",
-    swipedYou : true
+    swipedYou: true,
+    about: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    interest: ["Movie", "Design", "Clubbing", "Music", "Smoking"],
   },
 ];
 const alreadyRemoved = []

@@ -24,21 +24,14 @@ const StackNavigation = () => {
         name="ProfileDetails"
         component={ProfileDetails}
         options={{
-          headerTitle: "",
-          headerLeft: () => {
-            <TouchableOpacity
-              onPress={() => {
-                navigation.goBack();
-              }}
-            />;
-          },
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="Match"
         component={Match}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

@@ -2,10 +2,10 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-na
 import React from 'react'
 import ProfileCard from '../components/ProfileCard/ProfileCard';
 
-const Home = () => {
+const Home = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
-      <ProfileCard/>
+      <ProfileCard navigation={navigation}/>
     </SafeAreaView>
   )
 }

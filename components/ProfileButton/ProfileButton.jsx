@@ -1,7 +1,7 @@
 import { TouchableOpacity, View, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import Notification from '../../assets/notification.png';
-import Profile from '../../assets/richard.jpg'
+import Profile from '../../assets/profileImage.jpeg'
 const ProfileButton = () => {
   return (
     <View style = {styles.container}>

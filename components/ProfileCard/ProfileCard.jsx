@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   ImageBackground,
   Text,
@@ -8,6 +8,11 @@ import {
 } from "react-native";
 import TinderCard from "react-tinder-card";
 import richardImage from "../../assets/profileImage.jpeg";
+import women1 from "../../assets/women1.jpg";
+import women2 from "../../assets/women2.jpg";
+import women3 from "../../assets/women3.jpg";
+import women4 from "../../assets/women4.jpeg";
+import women5 from "../../assets/women5.jpeg";
 import location from "../../assets/location.png";
 import verified from "../../assets/verified.png";
 import notverified from "../../assets/notverified.png";
@@ -105,63 +110,98 @@ const styles = {
 
 const db = [
   {
-    name: "Richard Hendricks",
-    img: richardImage,
-    age: 21,
+    name: "Emily Johnson",
+    img: women1,
+    age: 22,
     verified: true,
-    location: "Jaipur, Rajasthan",
+    location: "Jaipur, India",
+    swipedYou : null
   },
   {
-    name: "Erlich Bachman",
-    img: richardImage,
-    age: 21,
+    name: "Olivia Rodriguez",
+    img: women2,
+    age: 23,
     verified: true,
-    location: "Jaipur, Rajasthan",
+    location: "Delhi, India",
+    swipedYou : true
   },
   {
-    name: "Monica Hall",
-    img: richardImage,
+    name: "Mia Thompson",
+    img: women3,
     age: 21,
     verified: true,
-    location: "Jaipur, Rajasthan",
+    location: "Mumbai, India",
+    swipedYou : false
   },
   {
-    name: "Jared Dunn",
-    img: richardImage,
-    age: 21,
+    name: "Ava Davis",
+    img: women4,
+    age: 24,
     verified: true,
-    location: "Jaipur, Rajasthan",
+    location: "Gurugram, India",
+    swipedYou : true
   },
   {
-    name: "Tilak Atri",
-    img: richardImage,
-    age: 21,
+    name: "Sophia Smith",
+    img: women5,
+    age: 19,
     verified: true,
-    location: "Jaipur, Rajasthan",
+    location: "London, UK",
+    swipedYou : true
   },
 ];
+const alreadyRemoved = []
+let charactersState = db
 
-function ProfileCard() {
-  const characters = db;
+function ProfileCard({navigation}) {
+  const [characters, setCharacters] = useState(db)
   const [lastDirection, setLastDirection] = useState();
-
+  const childRefs = useMemo(
+    () =>
+      Array(db.length)
+        .fill(0)
+        .map((i) => React.createRef()),
+    []
+  );
   const swiped = (direction, nameToDelete) => {
-    console.log("removing: " + nameToDelete);
-    setLastDirection(direction);
-  };
+    console.log('removing: ' + nameToDelete + ' to the ' + direction)
+    setLastDirection(direction)
+    alreadyRemoved.push(nameToDelete)
+    if(direction === "right"){
+      let target = db.filter((person) => person.name === nameToDelete)[0];
+      if(target.swipedYou === true){
+        navigation.navigate('Match', {profile : target})
+      }
+    }
+  }
 
   const outOfFrame = (name) => {
-    console.log(name + " left the screen!");
+    console.log(name + ' left the screen!')
+    charactersState = charactersState.filter(character => character.name !== name)
+    setCharacters(charactersState)
+  }
+
+  const buttonSwipe = (dir) => {
+      const cardsLeft = characters.filter(
+      (person) => !alreadyRemoved.includes(person.name)
+    );
+    if (cardsLeft.length) {
+      const toBeRemoved = cardsLeft[cardsLeft.length - 1].name;
+      const index = db.map((person) => person.name).indexOf(toBeRemoved);
+      alreadyRemoved.push(toBeRemoved);
+      childRefs[index].current.swipe(dir);
+    }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.cardContainer}>
-        {characters.map((character) => (
+        {characters.map((character, index) => (
           <TinderCard
             key={character.name}
             onSwipe={(dir) => swiped(dir, character.name)}
             onCardLeftScreen={() => outOfFrame(character.name)}
+            ref={childRefs[index]}
           >
             <View style={styles.card}>
               <ImageBackground style={styles.cardImage} source={character.img}>
@@ -209,7 +249,7 @@ function ProfileCard() {
                   <TouchableOpacity
                     style={styles.visitProfileButton}
                     onPress={() => {
-                      console.log("Visit Profile");
+                      navigation.navigate('ProfileDetails', { profile: character });
                     }}
                   >
                     <Text
@@ -244,11 +284,11 @@ function ProfileCard() {
             borderRadius: 50,
             backgroundColor: "#fff",
             elevation: 10,
-
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
+          onPress={() => buttonSwipe("left")}
         >
           <Image
             source={reject}
@@ -286,6 +326,7 @@ function ProfileCard() {
             alignItems: "center",
             justifyContent: "center",
           }}
+          onPress={() => buttonSwipe("right")}
         >
           <Image
             source={superlike}
